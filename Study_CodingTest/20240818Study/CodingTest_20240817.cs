@@ -99,10 +99,14 @@ namespace Study_CodingTest
         /// </summary>
         public int DivideInt(int num1, int num2)
         {
-            double result;
+            /*double result;
             result = (double)num1 / (double)num2 * 1000;
 
-            return (int)result;
+            return (int)result;*/
+            int result;
+            result = num1 * 1000 / num2;
+
+            return result;
         }
 
         /// <summary>

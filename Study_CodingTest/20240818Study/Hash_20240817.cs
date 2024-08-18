@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 
 namespace Study_CodingTest._20240818Study
-{   /*
+{   
+    /*
     제목 : 알고리즘 Kit - 해시 - 폰켓몬
     URL : https://school.programmers.co.kr/learn/courses/30/lessons/1845
     문제 : 당신은 폰켓몬을 잡기 위한 오랜 여행 끝에, 홍 박사님의 연구실에 도착했습니다. 
@@ -30,7 +31,6 @@ namespace Study_CodingTest._20240818Study
     코멘트 : 프로그래머스에 C++ / Java / JavaScript / Python3 만 존재하여 C#으로 임의로 풀이 후
              임의로 확인함
     */
-
     public class Hash_20240817
     {
         public static int PickNumPhoneketM(int[] nums)
@@ -46,15 +46,19 @@ namespace Study_CodingTest._20240818Study
                     FindM.Add(i, nums[i]); // 해시테이블에 저장
                 }
             } // 아니면 다시 반복
+            result = Math.Min(FindM.Count, count);
+            /* 
             if(FindM.Count > count) // 해시테이블의 크기가 선택할 수 있는 폰켓몬의 수보다 크면
             {
                 result = count; // 선택 가능한 폰켓몬의 수 출력
             }
             else result = FindM.Count; // 아니면 해시테이블의 크기 출력
-
+            */
             return result;
+
             #region 스택을 이용하여 구하는 방식을 생각한 소스코드
-            /*int result; // 출력할 결과
+            /*
+            int result; // 출력할 결과
             int count = nums.Length / 2; // 선택할 수 있는 폰켓몬의 수
             Stack<int> PickM = new Stack<int>(); // 선택 가능한 폰켓몬의 종류
             PickM.Push(nums[0]);
@@ -77,7 +81,8 @@ namespace Study_CodingTest._20240818Study
             else // 아니면
                 result = FindM.Length; // 배열의 크기 반환 
 
-            return result;*/
+            return result;
+            */
             #endregion
         }
     }
