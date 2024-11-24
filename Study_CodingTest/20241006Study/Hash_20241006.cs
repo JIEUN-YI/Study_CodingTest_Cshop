@@ -7,8 +7,7 @@
         /// 제목 : 의상
         /// URL : https://school.programmers.co.kr/learn/courses/30/lessons/42578
         /// </summary>
-        /// 경우의 수 구하기로 계산하긴했는데, 프로그래밍으로 짜는 게 어렵네요...
-        /// 
+
         public static void solution(string[,] clothes)
         {
             int answer = 0;
@@ -23,9 +22,9 @@
             List<string> values = new List<string>(list.Values);
             List<string> keys = new List<string>(list.Keys);
 
-            for(int i = 0;i < keys.Count;i++)
+            for(int i = 0 ; i < keys.Count;i++)
             {
-                for(int j = 1;j < values.Count;j++)
+                for(int j = 1; j < values.Count;j++)
                 {
 
                 }

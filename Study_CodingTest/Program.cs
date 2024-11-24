@@ -1,17 +1,17 @@
 ﻿using Study_CodingTest._20241006study;
+using Study_CodingTest._20241123Study;
+using System;
+using System.Diagnostics.Metrics;
 namespace Study_CodingTest
 {
     public class Program 
     { 
         static void Main(string[] args)
         {
-            string[,] clothes =
-            {
-                {"yellow_hat", "headgear" }, 
-                {"green_turban", "headgear" },
-                {"blue_sunglasses", "eyewear" }
-            };
-            Hash_20241006.solution(clothes);
+            CodingTest_20241123.MeasureNum(24);
         }
+
+
+
     }
 }
