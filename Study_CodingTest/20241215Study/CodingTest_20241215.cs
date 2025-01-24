@@ -34,12 +34,10 @@
             Array.Reverse(sides); // 내림차순으로 변환
             if (sides[0] < sides[1] + sides[2])
             {
-                Console.WriteLine("1");
                 return 1;
             }
             else
             {
-                Console.WriteLine("2");
                 return 2;
             }
         }
