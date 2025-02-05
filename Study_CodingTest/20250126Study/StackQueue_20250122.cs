@@ -13,8 +13,46 @@
         ///        각 배포마다 몇 개의 기능이 배포되는지를 return 하도록 solution 함수를 완성하세요.
         /// 예시 : [ 93, 30, 50 ] [ 1, 30, 5 ] => [ 2, 1 ] / [ 95, 90, 99, 99, 80, 99 ] [ 1, 1, 1, 1, 1, 1 ] => [ 1, 3, 2 ]
         /// </summary>
-        public void Development(int[] progresses, int[] speeds)
+        public static void Development(int[] progresses, int[] speeds)
         {
+            /*
+            int[] answer = new int[progresses.Length]; // 결과값 인출 배열
+
+            // Queue를 선언
+            Queue<int> queue = new Queue<int>();
+            // progresses의 원소로 초기화
+            foreach (int i in progresses)
+            {
+                queue.Enqueue(i);
+            }
+
+            int day = 1; // 업무 일수
+            int work; // 가장 먼저 작업할 작업의 완료도
+            int count = 0; // 작업 개수
+
+            for (int i = 0; i < speeds.Length; i++)
+            {
+                do
+                {
+                    work = queue.Peek();
+                    work += speeds[i] * day;
+                    if (work  >= 100)
+                    {
+                        count++;
+                        queue.Dequeue();
+                    }
+                    else
+                    {
+                        day++;
+                    }
+                }
+                while (work <= 100);
+            }
+            foreach (int i in answer)
+            {
+                Console.WriteLine(i);
+            }
+            */
 
         }
     }

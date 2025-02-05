@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Study_CodingTest._20250126Study
+namespace Study_CodingTest._20250209Study
 {
-    public class CodingTest_20250126
+    public class CodingTest_20250209
     {
         /// <summary>
         /// 제목 : 문자열 정렬하기 (1)
@@ -74,6 +74,8 @@ namespace Study_CodingTest._20250126Study
         /// 문제 : 정수 배열 numbers가 매개변수로 주어집니다. numbers의 원소 중 두 개를 곱해 만들 수 있는 최댓값을
         ///        return하도록 solution 함수를 완성해주세요.
         /// 예시 : [ 1, 2, -3, 4, -5 ] => [ 15 ] / [ 0, -31, 24, 10, 1, 9 ] => [ 240 ] / [ 10, 20, 30, 5, 5, 20, 5 ] => [ 600 ]
+        /// 풀이 : 배열을 정열 후 앞에 두 수 와 뒤의 두 수를 곱하여 둘 중 큰 값을 출력
+        ///        => 앞의 두 수가 모두 - 이면 양수가 되기 때문
         /// </summary>
         public static void MaxNumMaker2(int[] numbers)
         {
@@ -93,7 +95,6 @@ namespace Study_CodingTest._20250126Study
                     absolute.Add(i, value);
                 }
             }
-
         }
 
         /// <summary>
@@ -127,6 +128,7 @@ namespace Study_CodingTest._20250126Study
         ///        n명이 주문한 피자를 남기지 않고 모두 같은 수의 피자 조각을 먹어야 한다면 최소 몇 판을 시켜야 하는지를
         ///        return 하도록 solution 함수를 완성해보세요.
         /// 예시 : [ 6 ] => [ 1 ] / [ 10 ] => [ 5 ] / [ 4 ] => [ 2 ]
+        /// 풀이 3으로 나누어 나머지가 0인 경우 몫을 저장하고 몫을 2로 나누어 나머지가 0이면 그 결과를 리턴
         /// </summary>
         /// 여기서는 잘 되는데, 프로그래머스에서는 안넘어가짐
         public static int SharePizza(int n)
@@ -136,18 +138,6 @@ namespace Study_CodingTest._20250126Study
             int gcd = 0;
             int lcd = 0;
 
-            // 최대공약수 구하기
-            int GetGcd(int a, int b)
-            {
-                if (a % b == 0)
-                {
-                    return b;
-                }
-                else
-                {
-                    return GetGcd(a, a % b);
-                }
-            }
             if (n >= 6)
             {
                 // 최소공배수 = 두수의 곱 / 최대공약수
@@ -161,6 +151,17 @@ namespace Study_CodingTest._20250126Study
             }
             answer = lcd / 6;
             return answer;
+        }
+        public static int GetGcd(int a, int b)// 최대공약수 구하기
+        {
+            if (a % b == 0)
+            {
+                return b;
+            }
+            else
+            {
+                return GetGcd(a, a % b);
+            }
         }
 
         /// <summary>
