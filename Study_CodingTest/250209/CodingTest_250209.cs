@@ -76,17 +76,6 @@
                 words.Add(c);
             }
             words = words.Distinct().ToList(); // List에서 중복값 제거하기
-            /*foreach (char c in my_string)
-            {
-                if (words.Contains(c)) // 중복인 경우 제외
-                {
-                    continue;
-                }
-                else if (!words.Contains(c)) // 중복이 아닌 경우 저장
-                {
-                    words.Add(c);
-                }
-            }*/
             string answer = new string(words.ToArray());
             Console.WriteLine(answer);
             return answer;
@@ -303,6 +292,34 @@
         public static void CutStringTo(string my_str, int n)
         {
 
+            /*
+             * Substring(a, b)을 사용하여 구현하고자 함
+             * => 범위가 넘어서는 예외처리 방법을 잘 모르겠음
+             */
+            List<string> answer = new List<string>();
+            int len = 0; // for문을 돌릴 길이
+
+            // 나머지가 있는 경우 배열이 하나 더 생김
+            if (my_str.Length % n == 0)
+            {
+                len = my_str.Length / n;
+            }
+            else if (my_str.Length % n != 0)
+            {
+                len = my_str.Length / n + 1;
+            }
+
+            for (int i = 0, count = 1; count <= len; i += n, count++)
+            {
+                // Substring(a,b) : a부터 b만큼 자르기
+                string str = my_str.Substring(i, n);
+                answer.Add(str);
+            }
+
+            foreach (string str in answer)
+            {
+                Console.WriteLine(str);
+            }
         }
         /// <summary>
         /// 제목 : 공던지기
@@ -314,10 +331,21 @@
         /// 예시 : [ { 1, 2, 3, 4 }, 2 ] => [ 3 ] / [ { 1, 2, 3, 4, 5, 6 }, 5 ] => [ 3 ] / [ { 1, 2, 3 }, 3 ] => [ 2 ]
         /// </summary>
         /// 
-        public static void ThrowBall(int[] numbers, int k)
-
+        public int ThrowBall(int[] numbers, int k)
         {
+            int answer = 0;
+            for (int i = 0, count = 1; count <= k; count++)
+            {
+                if (i >= numbers.Length)
+                {
+                    i -= numbers.Length;
+                }
 
+                answer = numbers[i];
+                i += 2;
+            }
+
+            return answer;
         }
 
     }
