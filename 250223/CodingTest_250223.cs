@@ -103,10 +103,13 @@ namespace Study_CodingTest._250223
         ///        balls개의 구슬 중 share개의 구슬을 고르는 가능한 모든 경우의 수를 return 하는 solution 함수를 완성해주세요.
         /// 예시 : [ 3, 2 ] => [ 3 ] / [ 5, 3 ] => [ 10 ]
         /// </summary>
-        /// 5 ~ 7, 18 ~ 23, 25 ~ 35 테스트 케이스 실패 => 나눗셈의 int 값 변환 때문으로 추정
-        public static void ShareBall(int balls, int share)
+        /// 1차 : 5 ~ 7, 18 ~ 23, 25 ~ 35 테스트 케이스 실패 => 나눗셈의 int 값 변환 때문으로 추정
+        /// 스터디 풀이 : 자료형 double 또는 나눗셈과 곱셈을 한번에 사용
+        /// 2차 : 5 ~ 7, 21, 23, 25 ~26, 28 ~ 32, 35 실패
+        /// 3차 : 5 ~ 6, 35 실패
+        public double ShareBall(int balls, int share)
         {
-            /* 5 ~ 7, 18 ~ 23, 25 ~ 35 테스트 케이스 실패 => 나눗셈의 int 값 변환 때문으로 추정
+            /* 1차
             int num1 = 1; // 공식에서 분자 부분
             for(int i = 1; i <= balls; i++)
             {
@@ -133,14 +136,10 @@ namespace Study_CodingTest._250223
 
             return result;
             */
-
+            /* 2차
             int num1 = 1;
-            for (int i = balls; i >= 1; i--)
+            for (int i = balls; i > share; i--)
             {
-                if (i == share)
-                {
-                    break;
-                }
                 num1 *= i;
             }
             Console.WriteLine(num1);
@@ -153,6 +152,23 @@ namespace Study_CodingTest._250223
 
             int result = num1 / num2;
             Console.WriteLine(result);
+            */
+            /* 3차
+            int answer = 1;
+            for (int count = 1; balls > share; balls--, count++)
+            {
+                answer *= balls;
+                answer /= count;
+            }
+            Console.WriteLine(answer);
+            */
+            double answer = 1;
+            for (int count = 1; balls > share; balls--, count++) // 공식에서 당연히 약분해지는 범위를 제외하고
+            {
+                answer *= balls; // 곱셈과
+                answer /= count; // 나눗셈 진행
+            }
+            return answer; // double형으로 진행해야 범위를 벗어나지 않음
         }
 
         /// <summary>
@@ -170,11 +186,11 @@ namespace Study_CodingTest._250223
         /// 예시 : [ "left", "right", "up", "right", "right", [ 11, 11 ] ] => [ 2, 1 ] 
         ///      / [ "down", "down", "down", "down", "down", [ 7, 9 ] ] => [ 0, -4 ]
         /// </summary>
-        /// 케이스 8번 오류
-        /// [ ["right", "right", "right", "right", "right", "left"] [9, 5] ] => [ 3, 0 ]
-        /// Why? 4, 0 이 결과 값이 아닌가...?
-        public static void MoveVector(string[] keyinput, int[] board)
+        /// 1차 : 케이스 8번 오류
+        /// 
+        public int[] MoveVector(string[] keyinput, int[] board)
         {
+            /* 8번 오류
             // 캐릭터의 기본 좌표값
             int x = 0; // 오른쪽 +1 / 왼쪽 -1
             int y = 0; // 위쪽 +1 / 아랫쪽 -1
@@ -222,7 +238,52 @@ namespace Study_CodingTest._250223
             int[] answer = new int[2];
             answer[0] = x;
             answer[1] = y;
+            */
+            int sizeX = board[0] / 2; // x의 사이즈
+            int sizeY = board[1] / 2; // y의 사이즈
 
+            int x = 0; // 오른쪽 +1 / 왼쪽 -1
+            int y = 0; // 위쪽 +1 / 아랫쪽 -1
+            foreach (string key in keyinput)
+            {
+                switch (key)
+                {
+                    case "up":
+                        y += 1;
+                        break;
+                    case "down":
+                        y -= 1;
+                        break;
+                    case "left":
+                        x -= 1;
+                        break;
+                    case "right":
+                        x += 1;
+                        break;
+                }
+                // 좌표 이동 후 최대, 최소 범위를 벗어나는 지 확인
+                if (x < sizeX * -1)
+                {
+                    x = Math.Max(x, sizeX * -1);
+                }
+                else if (x > sizeX)
+                {
+                    x = Math.Min(x, sizeX);
+                }
+                if (y < sizeY * -1)
+                {
+                    y = Math.Max(y, sizeY * -1);
+                }
+                else if (y > sizeY)
+                {
+                    y = Math.Min(y, sizeY);
+                }
+            }
+
+            int[] answer = new int[2];
+            answer[0] = x;
+            answer[1] = y;
+            return answer;
         }
 
         /// <summary>
@@ -236,11 +297,45 @@ namespace Study_CodingTest._250223
         ///      / [ ["z", "d", "x"], ["def", "dww", "dzx", "loveaw"] ] => [ 1 ]
         ///      / [ ["s", "o", "m", "d"], ["moos", "dzx", "smm", "sunmmo", "som"] ] => [ 2 ]
         /// </summary>
-        /// 
-        public static void AliensDic(string[] spell, string[] dic)
+        /// 스터디 풀이 : 
+        /// dic의 원소와 spell의 길이를 비교
+        /// 길이가 같은 경우 for문으로 하나씩 string을 비교
+        public int AliensDic(string[] spell, string[] dic)
         {
-            
+            int count = 0;
+            foreach (string key in dic) // dic 배열의 모든 string 값을 하나씩 돌면서 판별
+            {
+                if (key.Length == spell.Length) // spell의 단어를 한번씩만 사용 = spell의 길이와 key의 길이가 동일해야함 = 동일한 경우만 판별
+                {
+                    for (int i = 0; i < spell.Length; i++) // spell의 길이 동안
+                    {
+                        for (int j = 0; j < key.Length; j++) // key의 길이를 돌면서
+                        {
+                            if (spell[i] == key[j].ToString()) // 두 string 값이 같은지 비교
+                            {
+                                count++; // 같으면 count++
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+
+                        }
+                    }
+                    if (count == spell.Length) // key의 spell과 동일한 값의 개수가 spell의 길이와 같으면
+                    {
+                        return 1; // 가능함
+                    }
+                    else
+                    {
+                        count = 0; // 같지 않으면 다른 key도 조사해야 함
+                    }
+                }
+            }
+            return 2; // 그 외 모든 경우
         }
+
         /// <summary>
         /// 제목 : 종이 자르기
         /// URL : https://school.programmers.co.kr/learn/courses/30/lessons/120922
@@ -265,29 +360,26 @@ namespace Study_CodingTest._250223
         ///        직사각형의 넓이를 return 하도록 solution 함수를 완성해보세요.
         /// 예시 : [ [1, 1], [2, 1], [2, 2], [1, 2] ] => [ 1 ] / [ [-1, -1], [1, 1], [1, -1], [-1, 1] ] => [ 4 ]
         /// </summary>
-        /// 
-        public static void SquareArea(int[,] dots)
+        /// 스터디 풀이 : 
+        /// 대각선에 있는 두 점을 구해서 x값과 y값을 차를 곱하여 넓이를 구하기
+        /// [0,0] = 첫번째 x값
+        /// [0,1] = 첫번째 y값
+        public int SquareArea(int[,] dots)
         {
-            for(int j = 1; j <= dots.GetLength(0)-1; j++)
-            {
-
-            }
-
+            int sizeX = 0;
+            int sizeY = 0;
             for (int j = 0; j < dots.GetLength(0); j++)
             {
-                for (int i = 0; i < dots.GetLength(1); i++)
+                if (dots[0, 0] != dots[j, 0] && dots[0, 1] != dots[j, 1]) // 기준점에서 대각선에 존재하는 값
                 {
-                    Console.Write(dots[j, i]);Console.Write(", ");
+                    // 두 수 중 큰 수 - 작은 수
+                    sizeX = Math.Max(dots[0, 0], dots[j, 0]) - Math.Min(dots[0, 0], dots[j, 0]); 
+                    sizeY = Math.Max(dots[0, 1], dots[j, 1]) - Math.Min(dots[0, 1], dots[j, 1]);
+                    break;
                 }
-                Console.WriteLine();
             }
-            /*for(int i = 0; i < dots.GetLength(1); i++)
-            {
-                for(int j = 0; j < dots.GetLength(0); j++)
-                {
-                    Console.WriteLine(dots[j, i]);
-                }
-            }*/
+            int answer = sizeX * sizeY; // 넓이 구하기
+            return answer;
         }
         /// <summary>
         /// 제목 : 로그인 성공?
@@ -303,6 +395,37 @@ namespace Study_CodingTest._250223
         ///      / [ "rabbit04", "98761" / ["jaja11", "98761"], ["krong0313", "29440"], ["rabbit00", "111333"] ] => [ "fail" ]
         /// </summary>
         /// 
+        public string FindLogin(string[] id_pw, string[,] db)
+        {
+            string result;
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            for (int j = 0; j < db.GetLength(0); j++)
+            {
+                for (int i = 0; i < db.GetLength(1); i += 2)
+                {
+                    dic.Add(db[j, i], db[j, i + 1]); // db 배열의 정보를 dic에 각각 키와 값으로 저장
+                }
+            }
+            if (dic.ContainsKey(id_pw[0])) // dic에 키값과 아이디 정보가 같으면
+            {
+                if (dic[id_pw[0]] == id_pw[1]) // 비밀번호 정보가 같으면
+                {
+                    result = "login"; // 로그인
+                }
+                else // 비밀번호 정보가 다르면
+                {
+                    result = "wrong pw";
+                }
+            }
+            else // 아이디 정보가 없으면
+            {
+                result = "fail";
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 제목 : 치킨 쿠폰
         /// URL : https://school.programmers.co.kr/learn/courses/30/lessons/120884
@@ -312,8 +435,10 @@ namespace Study_CodingTest._250223
         /// 예시 : [ 100 ] => [ 11 ] / [ 1081 ] => [ 120 ]
         /// </summary>
         /// 1차 : 2,4,5,8,10 실패
-        public static int ChickenCupon(int chicken)
+        /// 스터디 풀이 : 나머지를 쿠폰의 갯수에 포함하여 다음 계산에 가져가기
+        public int ChickenCupon(int chicken)
         {
+            /* 1차
             int count = 0;
             int sum = 0;
             while (chicken > 10)
@@ -326,8 +451,15 @@ namespace Study_CodingTest._250223
 
             Console.WriteLine(sum);
             return sum;
+            */
+            int cupon = 0;
+            while (chicken >= 10)
+            {
+                cupon += chicken / 10; // 사용하고 받은 쿠폰
+                chicken = chicken / 10 + chicken % 10; // 최종 남은 쿠폰
+            }
+            return cupon;
         }
-
 
     }
 }
