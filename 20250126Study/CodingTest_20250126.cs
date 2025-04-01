@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Study_CodingTest._20250209Study
+namespace Study_CodingTest._20250126
 {
-    public class CodingTest_20250209
+    public class CodingTest_20250126
     {
         /// <summary>
         /// 제목 : 문자열 정렬하기 (1)
@@ -79,22 +79,7 @@ namespace Study_CodingTest._20250209Study
         /// </summary>
         public static void MaxNumMaker2(int[] numbers)
         {
-            Dictionary<int, int> absolute = new Dictionary<int, int>();
-            //int[] absolute = new int[numbers.Length];
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                if (numbers[i] < 0)
-                {
-                    // 절대값으로 비교하기 위해 변환
-                    int value = numbers[i] * -1;
-                    absolute.Add(i, value);
-                }
-                else
-                {
-                    int value = numbers[i];
-                    absolute.Add(i, value);
-                }
-            }
+            
         }
 
         /// <summary>
@@ -130,7 +115,8 @@ namespace Study_CodingTest._20250209Study
         /// 예시 : [ 6 ] => [ 1 ] / [ 10 ] => [ 5 ] / [ 4 ] => [ 2 ]
         /// 풀이 3으로 나누어 나머지가 0인 경우 몫을 저장하고 몫을 2로 나누어 나머지가 0이면 그 결과를 리턴
         /// </summary>
-        /// 여기서는 잘 되는데, 프로그래머스에서는 안넘어가짐
+        /// 여기서는 잘 되는데, 프로그래머스에서는 안넘어가짐 
+        /// 프로그래머스에서 테스트 4, 5번 실패
         public static int SharePizza(int n)
         {
             // 두 수(6과 n)의 최소 공배수를 6에 곱해서 만드는 수

@@ -1,5 +1,6 @@
-﻿using Study_CodingTest._250309;
+﻿using Study_CodingTest._250323;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Study_CodingTest
 {
@@ -7,21 +8,12 @@ namespace Study_CodingTest
     {
         static void Main(string[] args)
         {
-            int[,] lines1 =
-            {
-                { 0, 1 }, { 2, 5 }, { 3, 9 }
-            };
-            int[,] lines2 =
-            {
-                { -1, 1 }, { 1, 3 }, { 3, 9 }
-            };
-            int[,] lines3 =
-            {
-                { 0, 5 }, { 3, 9 }, { 1, 10 }
-            };
-            CodingTest_250309.OverlapLine(lines1);
-            CodingTest_250309.OverlapLine(lines2);
-            CodingTest_250309.OverlapLine(lines3);
+            int[,] dots1 = { { 1, 4 }, { 9, 2 }, { 3, 8 }, { 11, 6 } };
+            int[,] dots2 = { { 3, 5 }, { 4, 1 }, { 2, 4 }, { 5, 10 } };
+
+            CodingTest_250323.Parallel(dots1);
+            CodingTest_250323.Parallel(dots2);
+
         }
     }
 }
